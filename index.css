@@ -1,0 +1,71 @@
+
+
+h1{
+  text-align:left;
+  color:rgb(255, 255, 255);
+  font-size:5em;
+  font-family: 'Roboto';
+  letter-spacing: 3px;
+  position: relative;
+  
+} 
+
+h2{
+  text-align:left;
+  line-height: 0.1em;
+  color:rgb(255, 255, 255);
+  font-size:1.2em;
+  font-family: 'Roboto';
+  letter-spacing: 1px;
+  position: relative;
+  
+} 
+
+/* https://www.w3schools.com/css/css3_buttons.asp */
+button{
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 12px 24px;
+  border: 0;
+  color: 	#ff00ff;
+  background: #ffffff;
+  line-height: 1.15;
+  font-size: 16px;
+}
+
+button:hover {
+  transition: all .1s ease;
+  box-shadow: 0 0 0 0 #fff, 0 0 0 3px 	#ff00ff;
+}
+
+*{
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  }
+
+
+  
+  body {
+  background-color: rgb(0, 0, 0);
+  color: white;  
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+
+  #canvas {
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  }
+  
+
+#start-screen{
+  margin: auto;
+  width: 100%;
+}
+  
