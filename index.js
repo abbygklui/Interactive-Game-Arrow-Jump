@@ -291,31 +291,32 @@ function privateShape(){
     /// upon collision on a point of the same colour as the dot, t will equals to 30
     /// effect will be draw and updated using angle and forward, then t will decrease by 1
     /// when t is less then or equal to 0, nothing is drawn
-    function circlePointDrawUpdate(o1){
-
-        if (t>0){
-
-            for(var i=0; i<o1.length; i++){
-                /// using the remainder operator and array to loop between each colour
-                /// each shape made will be loop between these colours
-                
+    function circlePointDrawUpdate(o1) {
+        if (t > 0) {
+            for (var i = 0; i < o1.length; i++) {
                 circlePointsShape(o1[i]);
-                angle(o1[i],o1[i].m);
-                forward(o1[i],o1[i].n);
+                angle(o1[i], o1[i].m);
+                forward(o1[i], o1[i].n);
             }
-            t--
-        }else{
-            for(var i=0; i<o1.length; i++){
-            index = buildCirclePoint.indexOf(o1);
-            buildCirclePoint.splice(index, 1);
+            t--;
+        } else {
+            // Create an array to store indices of elements to remove
+            var indicesToRemove = [];
+    
+            // Find indices of elements to remove
+            for (var i = 0; i < buildCirclePoint.length; i++) {
+                if (buildCirclePoint[i] === o1) { // Assuming o1 is a unique object reference
+                    indicesToRemove.push(i);
+                }
+            }
+    
+            // Remove elements from buildCirclePoint array in reverse order
+            for (var j = indicesToRemove.length - 1; j >= 0; j--) {
+                buildCirclePoint.splice(indicesToRemove[j], 1);
             }
         }
-
-
-
-    
-        
     }
+    
     
 
 
