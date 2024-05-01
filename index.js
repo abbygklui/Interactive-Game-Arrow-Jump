@@ -39,6 +39,8 @@ function privateShape(){
     var buildShape = [];
     var buildCirclePoint = [];
 
+    let drawCounter = 0;
+
 
 
     /// this variable will move the shapes downwards during each animation loop. 
@@ -221,17 +223,38 @@ function privateShape(){
         circlePointDrawUpdate(buildCirclePoint);
         updateData(buildSquare,player,buildStartBox,buildPointShape,buildDownSquare,buildShape);
         squareDrawUpdate(buildSquare);
-        squaredownDrawUpdate(buildDownSquare);
+        // squaredownDrawUpdate(buildDownSquare);
         shapedrawUpdate(buildShape);
         pointDrawUpdate(buildPointShape);
         checkCollision(buildSquare, player, buildStartBox,buildDownSquare,buildShape);
+        removeOutOfBounds();
         endGame(player);
         text();
+
         
         /// loops animationLoop
         requestAnimationFrame (animationLoop);
      }
 
+    }
+    function removeOutOfBounds() {
+        // Iterate over each array and remove objects that are out of bounds
+        removeOutOfBoundObjects(buildShape);
+        removeOutOfBoundObjects(buildSquare);
+        removeOutOfBoundObjects(buildDownSquare);
+        removeOutOfBoundObjects(buildPointShape);
+        removeOutOfBoundObjects(buildCirclePoint);
+    }
+
+    function removeOutOfBoundObjects(array) {
+        // Iterate over the array and remove objects that are touching the bottom
+        for (let i = array.length - 1; i >= 0; i--) {
+            console.log(array)
+            if (array[i].y > h) {
+                array.splice(i, 1);
+                console.log("spliced")
+            }
+        }
     }
     
 
@@ -250,7 +273,7 @@ function privateShape(){
            pointsShape(o[i],o[i].s);
            pointCollision(o[i],player,buildCirclePoint);
 
-           bottomRemove(o[i],buildPointShape);
+           bottomRemove(o[i], buildPointShape);
         }
     }
     
@@ -268,19 +291,19 @@ function privateShape(){
 
             /// checking if the colour is the same
             if (p.c == o.c){
-                createCirclePoints(41);
-                /// spiral will be drawn for 29 loops
-                t = 30;
-                /// making sure the spiral effect is drawn from the x and y coordinates of the dot
-                for(var i=0; i<c.length; i++){
-                    c[i].x = o.x;
-                    c[i].y = o.y;
-                    c[i].c = o.c;
-                }
+                // createCirclePoints(41);
+                // /// spiral will be drawn for 29 loops
+                // t = 30;
+                // /// making sure the spiral effect is drawn from the x and y coordinates of the dot
+                // for(var i=0; i<c.length; i++){
+                //     c[i].x = o.x;
+                //     c[i].y = o.y;
+                //     c[i].c = o.c;
+                // }
 
                 
-                console.log("star colour is ,", o.c, "player colour is ,", p.c);
-                /// increasing score
+                // console.log("star colour is ,", o.c, "player colour is ,", p.c);
+                // /// increasing score
                 score++;
             }
         }
@@ -516,7 +539,7 @@ function privateShape(){
            p.y+p.d/2 >= sb.y-sb.h/2 && // bottom of o1 > top of o2 AND
            p.y-p.d/2 <= sb.y+sb.h/2 /// top of o1 < bottom of o2
            ){
-               console.log("yes")
+            //    console.log("yes")
                return true
            }else{
                console.log("no")
@@ -543,13 +566,18 @@ function privateShape(){
     
     
     /// removes when shapes touch the bottom
-    function bottomRemove(o,type){
+    function bottomRemove(o,arr){
         var index = 0;
-        // if (type.length != 0){
+
             if(o.y>h){
-                index = type.indexOf(o);
-                type.splice(index, 1);
-        // }
+                // console.log("Removing object:", o);
+                // console.log("Array before removal:", arr);
+                index = arr.indexOf(o);
+                if (index !== -1) {
+                    arr.splice(index, 1);
+                    // console.log("Object removed. Array after removal:", arr);
+                }
+                
         }
     }
     
@@ -557,6 +585,7 @@ function privateShape(){
     /// draws the player's shape and the box from the start
     function draw(o){
         player1 = jump(player);
+        clear();
         playerShape(o,o.s);
         rect(buildStartBox);
     
@@ -717,6 +746,11 @@ function privateShape(){
 
     /// draws the player shape and logs variables each time it is updated to check for collision
     function playerShape(o,n){
+
+        ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
     
        
         var points = [];
@@ -766,11 +800,14 @@ function privateShape(){
         }
         ctx.closePath();
         points.pop();
+        
     
-        ctx.shadowColor = "hsla("+o.c+", 100%, 50%,0.5)";
-        ctx.shadowBlur = 40;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
+        // ctx.shadowColor = "hsla("+o.c+", 100%, 50%,0.5)";
+        // ctx.shadowBlur = 40;
+        // ctx.shadowOffsetX = 0;
+        // ctx.shadowOffsetY = 0;
+
+        
 
         ctx.strokeStyle = "hsla("+o.c+", 100%, 50%, 0.6)";
         ctx.lineWidth = 5;
@@ -786,10 +823,17 @@ function privateShape(){
     }
 
 
+
     /// clears screen using a rect layer
     function clear(){
         ctx.fillStyle = 'rgba(0,0,0, 1)';
         ctx.fillRect(0,0, w,h);
+
+
+
+
+
+
             ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
